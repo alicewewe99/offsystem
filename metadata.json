@@ -1,0 +1,6 @@
+{
+  "name": "奇諾比奧蘑菇冒險假單｜長輩請假通知",
+  "description": "專為日照中心、長輩機構與家庭設計的奇諾比奧蘑菇王國主題請假通知產生器，具備復古遊戲音效、即時預覽與一鍵 LINE 分享功能。",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

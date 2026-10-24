@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>奇諾比奧蘑菇冒險假單｜長輩請假通知</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: "Microsoft JhengHei", "微軟正黑體", -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: #38a169; /* 蘑菇王國綠草地背景 */
+            background-image: 
+                radial-gradient(#48bb78 20%, transparent 20%),
+                radial-gradient(#48bb78 20%, transparent 20%);
+            background-size: 50px 50px;
+            background-position: 0 0, 25px 25px;
+        }
+
+        /* 奇諾比奧 & 蘑菇王國配色 */
+        .toad-red {
+            background-color: #E52521; /* 奇諾比奧蘑菇帽紅 */
+        }
+        .toad-blue {
+            background-color: #0055B8; /* 奇諾比奧背心藍 */
+        }
+        .toad-cream {
+            background-color: #FFFDF0; /* 奶油白色 */
+        }
+        .toad-yellow {
+            background-color: #FBD100; /* 問號磚塊黃 */
+        }
+        
+        .retro-border {
+            border: 4px solid #000000;
+            box-shadow: 6px 6px 0px #000000;
+        }
+
+        .toad-card-border {
+            border: 4px solid #000000;
+            box-shadow: 4px 4px 0px #000000;
+        }
+
+        .input-large {
+            font-size: 1.15rem;
+            padding: 0.85rem 1rem;
+        }
+
+        .btn-touch {
+            transition: transform 0.08s, box-shadow 0.08s;
+            cursor: pointer;
+            user-select: none;
+        }
+        .btn-touch:active {
+            transform: translate(2px, 2px);
+            box-shadow: 2px 2px 0px #000000;
+        }
+
+        /* 奇諾比奧蘑菇風格日期標籤 */
+        .mushroom-tag {
+            background-color: #FFFFFF;
+            border: 3px solid #000000;
+            color: #E52521;
+            padding: 6px 14px;
+            border-radius: 999px;
+            font-weight: 900;
+            display: inline-flex;
+            align-items: center;
+            margin: 4px;
+            font-size: 1.05rem;
+            box-shadow: 3px 3px 0px #0055B8;
+        }
+
+        /* 圓點蘑菇帽子圖案裝飾 */
+        .mushroom-dots {
+            background-image: radial-gradient(#FFFFFF 35%, transparent 36%);
+            background-size: 28px 28px;
+        }
+    </style>
+</head>
+<body class="p-3 md:p-8">
+    
+    <!-- 主內容區塊 -->
+    <div class="max-w-md mx-auto relative">
+        
+        <!-- 頂部裝飾標籤 -->
+        <div class="flex justify-between items-center mb-2 px-2">
+            <span class="toad-yellow text-black font-extrabold px-3 py-1 rounded-lg retro-border text-sm md:text-base flex items-center gap-1">
+                🍄 TOAD KINGDOM
+            </span>
+            <span class="toad-blue text-white font-extrabold px-3 py-1 rounded-lg retro-border text-sm md:text-base flex items-center gap-1">
+                🌟 WORLD 1-1
+            </span>
+        </div>
+
+        <!-- 主卡片容器 -->
+        <div class="bg-white rounded-3xl retro-border overflow-hidden relative">
+            
+            <!-- 奇諾比奧風格標頭區塊 -->
+            <div class="toad-red mushroom-dots p-6 text-white text-center relative border-b-4 border-black">
+                <div class="absolute top-2 left-3 text-3xl animate-bounce">🍄</div>
+                <div class="absolute top-2 right-3 text-3xl animate-bounce">✨</div>
+                <div class="bg-black/40 backdrop-blur-sm p-3 rounded-2xl border-2 border-white inline-block w-full">
+                    <h1 class="text-2xl md:text-3xl font-black text-white drop-shadow-[2px_2px_0_#000] flex items-center justify-center gap-2">
+                        🍄 DHGD請假系統 🍄
+                    </h1>
+                    <p class="mt-1 text-yellow-300 text-sm md:text-base font-extrabold drop-shadow-[1px_1px_0_#000]">
+                        「Thank you Mario! 讓DHGD請假系統幫長輩請假吧！」
+                    </p>
+                </div>
+            </div>
+
+            <!-- 表單填寫內容 -->
+            <div class="p-4 md:p-6 space-y-5 bg-[#FAF9F5]">
+                
+                <!-- 1. 選擇日期 -->
+                <div class="bg-[#FFF5F5] p-4 rounded-2xl toad-card-border">
+                    <label class="block text-xl md:text-2xl font-black text-black mb-2 flex items-center gap-1">
+                        📅 第一步：選擇請假日期 🍄
+                    </label>
+                    <div class="flex gap-2 mb-2">
+                        <input type="date" id="dateInput" 
+                            class="flex-1 input-large border-3 border-black rounded-2xl focus:outline-none font-black text-black bg-white border-2">
+                        <button onclick="playSound('powerup'); addDate();" class="toad-yellow text-black px-5 rounded-2xl font-black text-lg md:text-xl btn-touch toad-card-border hover:bg-yellow-400">
+                            加入 🪙
+                        </button>
+                    </div>
+                    <!-- 快捷按鈕 -->
+                    <div class="flex gap-2 mb-2">
+                        <button onclick="setQuickDate(0)" class="bg-white text-red-600 border-2 border-black font-extrabold px-3 py-1 rounded-xl text-sm btn-touch hover:bg-red-50">
+                            帶入今天 ☀️
+                        </button>
+                        <button onclick="setQuickDate(1)" class="bg-white text-red-600 border-2 border-black font-extrabold px-3 py-1 rounded-xl text-sm btn-touch hover:bg-red-50">
+                            帶入明天 🌅
+                        </button>
+                    </div>
+                    <!-- 日期清單 -->
+                    <div id="dateList" class="mt-2 flex flex-wrap min-h-[50px] bg-white p-2 rounded-xl border-2 border-dashed border-black">
+                        <span id="noDateHint" class="text-gray-400 p-2 font-bold">🍄 尚未加入請假日期喔！</span>
+                    </div>
+                </div>
+
+                <!-- 2. 長輩姓名 (選填) -->
+                <div class="bg-[#F0F7FF] p-4 rounded-2xl toad-card-border">
+                    <label class="block text-xl md:text-2xl font-black text-black mb-2 flex items-center gap-1">
+                        👤 第二步：長輩姓名 <span class="text-xs md:text-sm font-bold text-gray-500">（可不選）</span>
+                    </label>
+                    <input type="text" id="name" placeholder="請輸入名字（例如：王大明）" oninput="playSound('pop'); updateLivePreview();"
+                        class="w-full input-large border-2 border-black rounded-2xl focus:outline-none font-black text-black bg-white">
+                </div>
+
+                <!-- 3. 出席情形 -->
+                <div class="bg-[#FFFDF0] p-4 rounded-2xl toad-card-border">
+                    <label class="block text-xl md:text-2xl font-black text-black mb-2 flex items-center gap-1">🏫 出席情形 <span class="text-xs md:text-sm font-bold text-gray-500">（可不選）</span>：</label>
+                    <select id="attendance" onchange="playSound('toadJump'); toggleOtherInput('attendance'); updateLivePreview();" class="w-full input-large border-2 border-black rounded-2xl focus:outline-none bg-white font-black text-black mb-2">
+                        <option value="">-- 不變更 / 不選擇 🍄 --</option>
+                        <option value="上午上課 ☀️">上午上課 ☀️</option>
+                        <option value="下午上課 🌅">下午上課 🌅</option>
+                        <option value="整天請假 💤">整天請假 💤</option>
+                        <option value="自填">✏️ 想要自己寫內容...</option>
+                    </select>
+                    <div id="otherAttendanceContainer" class="hidden mb-2">
+                        <input type="text" id="otherAttendance" placeholder="手寫出席狀況..." oninput="playSound('pop'); updateLivePreview();"
+                            class="w-full input-large border-2 border-black rounded-2xl focus:outline-none font-black text-black">
+                    </div>
+                    <input type="text" id="attendanceName" placeholder="👤 自填此項目姓名（選填）" oninput="playSound('pop'); updateLivePreview();"
+                        class="w-full input-large border-2 border-black rounded-2xl focus:outline-none font-bold text-black bg-white text-base">
+                </div>
+
+                <!-- 4. 交通車 -->
+                <div class="bg-[#F2FDF4] p-4 rounded-2xl toad-card-border">
+                    <label class="block text-xl md:text-2xl font-black text-black mb-2 flex items-center gap-1">🚐 交通車 <span class="text-xs md:text-sm font-bold text-gray-500">（可不選）</span>：</label>
+                    <select id="transport" onchange="playSound('toadJump'); toggleOtherInput('transport'); updateLivePreview();" class="w-full input-large border-2 border-black rounded-2xl focus:outline-none bg-white font-black text-black mb-2">
+                        <option value="">-- 不變更 / 不選擇 🍄 --</option>
+                        <option value="早上不用載 ☀️">早上不用載 ☀️</option>
+                        <option value="下午不用載 🌅">下午不用載 🌅</option>
+                        <option value="整天不用載 🚫">整天不用載 🚫</option>
+                        <option value="自填">✏️ 想要自己寫內容...</option>
+                    </select>
+                    <div id="otherTransportContainer" class="hidden mb-2">
+                        <input type="text" id="otherTransport" placeholder="手寫交通車狀況..." oninput="playSound('pop'); updateLivePreview();"
+                            class="w-full input-large border-2 border-black rounded-2xl focus:outline-none font-black text-black">
+                    </div>
+                    <input type="text" id="transportName" placeholder="👤 自填此項目姓名（選填）" oninput="playSound('pop'); updateLivePreview();"
+                        class="w-full input-large border-2 border-black rounded-2xl focus:outline-none font-bold text-black bg-white text-base">
+                </div>
+
+                <!-- 5. 請假原因 -->
+                <div class="bg-[#FFF0F5] p-4 rounded-2xl toad-card-border">
+                    <label class="block text-xl md:text-2xl font-black text-black mb-2 flex items-center gap-1">📝 請假原因 <span class="text-xs md:text-sm font-bold text-gray-500">（可不選）</span>：</label>
+                    <select id="reason" onchange="playSound('toadJump'); toggleOtherInput('reason'); updateLivePreview();" class="w-full input-large border-2 border-black rounded-2xl focus:outline-none bg-white font-black text-black mb-2">
+                        <option value="">-- 不變更 / 不選擇 🍄 --</option>
+                        <option value="請假 ✋">請假 ✋</option>
+                        <option value="體檢 🏥">體檢 🏥</option>
+                        <option value="無人接送 🚗">無人接送 🚗</option>
+                        <option value="想休息 🏠">想休息 🏠</option>
+                        <option value="下雨☔休息 ☔">下雨☔休息 ☔</option>
+                        <option value="太冷休息 ❄️">太冷休息 ❄️</option>
+                        <option value="自填">✏️ 想要自己寫內容...</option>
+                    </select>
+                    <div id="otherReasonContainer" class="hidden mb-2">
+                        <input type="text" id="otherReason" placeholder="手寫原因..." oninput="playSound('pop'); updateLivePreview();"
+                            class="w-full input-large border-2 border-black rounded-2xl focus:outline-none font-black text-black">
+                    </div>
+                    <input type="text" id="reasonName" placeholder="👤 自填此項目姓名（選填）" oninput="playSound('pop'); updateLivePreview();"
+                        class="w-full input-large border-2 border-black rounded-2xl focus:outline-none font-bold text-black bg-white text-base">
+                </div>
+
+                <!-- 6. 伙食選項 -->
+                <div class="bg-[#FFFDF0] p-4 rounded-2xl toad-card-border">
+                    <label class="block text-xl md:text-2xl font-black text-black mb-2 flex items-center gap-1">🍱 伙食選項 <span class="text-xs md:text-sm font-bold text-gray-500">（可不選）</span>：</label>
+                    <select id="food" onchange="playSound('toadJump'); toggleOtherInput('food'); updateLivePreview();" class="w-full input-large border-2 border-black rounded-2xl focus:outline-none bg-white font-black text-black mb-2">
+                        <option value="">-- 不變更 / 不選擇 🍄 --</option>
+                        <option value="初一 十五吃素 🥗">初一 十五吃素 🥗</option>
+                        <option value="吃午餐 🍚">吃午餐 🍚</option>
+                        <option value="不吃午餐 ❌">不吃午餐 ❌</option>
+                        <option value="試行吃飯 🥢">試行吃飯 🥢</option>
+                        <option value="自帶午餐 🍱">自帶午餐 🍱</option>
+                        <option value="自填">✏️ 想要自己寫內容...</option>
+                    </select>
+                    <div id="otherFoodContainer" class="hidden mb-2">
+                        <input type="text" id="otherFood" placeholder="手寫伙食需求..." oninput="playSound('pop'); updateLivePreview();"
+                            class="w-full input-large border-2 border-black rounded-2xl focus:outline-none font-black text-black">
+                    </div>
+                    <input type="text" id="foodName" placeholder="👤 自填此項目姓名（選填）" oninput="playSound('pop'); updateLivePreview();"
+                        class="w-full input-large border-2 border-black rounded-2xl focus:outline-none font-bold text-black bg-white text-base">
+                </div>
+
+                <!-- 7. 📌 開頭自選欄位 -->
+                <div class="bg-[#F8F0FF] p-4 rounded-2xl toad-card-border">
+                    <label class="block text-xl md:text-2xl font-black text-black mb-2 flex items-center gap-1">📌 備註說明 <span class="text-xs md:text-sm font-bold text-gray-500">（有需要再寫）</span>：</label>
+                    <input type="text" id="customNote" placeholder="例如：會晚一點點到 🌟" oninput="playSound('pop'); updateLivePreview();"
+                        class="w-full input-large border-2 border-black rounded-2xl focus:outline-none font-black text-black mb-2">
+                    <input type="text" id="noteName" placeholder="👤 自填此項目姓名（選填）" oninput="playSound('pop'); updateLivePreview();"
+                        class="w-full input-large border-2 border-black rounded-2xl focus:outline-none font-bold text-black bg-white text-base">
+                </div>
+
+                <!-- 即時預覽區 -->
+                <div class="mt-8 p-5 rounded-2xl toad-cream toad-card-border relative">
+                    <div class="absolute -top-4 -right-2 text-3xl animate-bounce">🌟</div>
+                    <h3 class="text-xl font-black text-black mb-3 flex items-center gap-1 border-b-2 border-black pb-1">
+                        🔍 DHGD請假單預覽（即時產生）
+                    </h3>
+                    <div id="livePreview" class="text-lg text-black font-extrabold whitespace-pre-wrap break-words min-h-[60px] leading-relaxed">
+                        請開始填寫內容...
+                    </div>
+                </div>
+
+                <!-- 送出按鈕 -->
+                <button onclick="generateMessage()" 
+                    class="w-full toad-red text-white text-2xl font-black py-5 rounded-2xl btn-touch retro-border flex items-center justify-center gap-2 hover:bg-red-600">
+                    🍄✨ 產生請假訊息 (GO!)
+                </button>
+            </div>
+            
+            <!-- 底部裝飾條 -->
+            <div class="toad-blue p-4 text-center text-white font-black border-t-4 border-black flex items-center justify-center gap-2 text-sm md:text-base">
+                🍄 TOAD & MUSHROOM KINGDOM LEAVE SYSTEM 🌟 ✨
+            </div>
+        </div>
+
+        <!-- 彈出結果視窗 -->
+        <div id="resultModal" class="fixed inset-0 bg-black bg-opacity-70 hidden flex items-center justify-center p-4 z-40">
+            <div class="bg-white w-full max-w-sm rounded-3xl p-6 relative retro-border">
+                <div class="absolute -top-6 left-1/2 -translate-x-1/2 text-5xl">👑</div>
+                <h2 class="text-2xl font-black mb-4 text-center text-black border-b-2 border-black pb-2">
+                    🍄 DHGD請假單完成了！
+                </h2>
+                <div id="messageBox" class="toad-cream p-4 rounded-2xl text-xl leading-relaxed whitespace-pre-wrap border-2 border-black mb-6 font-extrabold text-black max-h-60 overflow-y-auto">
+                </div>
+                
+                <div class="space-y-3">
+                    <button onclick="playSound('win'); shareToApp();" 
+                        class="w-full bg-[#06C755] text-white text-xl font-black py-4 rounded-2xl btn-touch retro-border flex items-center justify-center gap-2">
+                        📲 分享到 LINE / 其他 APP 🚩
+                    </button>
+                    <button onclick="playSound('win'); copyAndClose();" 
+                        class="w-full toad-yellow text-black text-xl font-black py-4 rounded-2xl btn-touch retro-border flex items-center justify-center gap-2">
+                        📋 複製文字全部內容 🪙
+                    </button>
+                    <button onclick="playSound('toadJump'); closeModal();" 
+                        class="w-full toad-red text-white text-xl font-black py-4 rounded-2xl btn-touch retro-border">
+                        ❌ 返回繼續修改
+                    </button>
+                </div>
+                
+                <!-- 提示通知 -->
+                <div id="copyNotice" class="hidden absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-black text-white px-8 py-4 rounded-2xl text-xl font-black z-50 retro-border text-center">
+                    成功複製！ 🌟
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Web Audio API 8-Bit 蘑菇王國聲效合成器
+        const AudioCtx = window.AudioContext || window.webkitAudioContext;
+        let audioCtx = null;
+
+        function initAudio() {
+            if (!audioCtx) audioCtx = new AudioCtx();
+            if (audioCtx.state === 'suspended') audioCtx.resume();
+        }
+
+        document.addEventListener('touchstart', initAudio, { once: true });
+        document.addEventListener('click', initAudio, { once: true });
+
+        function playSound(type) {
+            try {
+                initAudio();
+                if (!audioCtx) return;
+                const now = audioCtx.currentTime;
+
+                if (type === 'powerup') {
+                    // 吃超級蘑菇變大音效
+                    const freqs = [330, 392, 659, 523, 587, 784];
+                    freqs.forEach((f, i) => {
+                        const osc = audioCtx.createOscillator();
+                        const gain = audioCtx.createGain();
+                        osc.type = 'square';
+                        osc.frequency.setValueAtTime(f, now + i * 0.05);
+                        gain.gain.setValueAtTime(0.1, now + i * 0.05);
+                        gain.gain.exponentialRampToValueAtTime(0.01, now + i * 0.05 + 0.08);
+                        osc.connect(gain);
+                        gain.connect(audioCtx.destination);
+                        osc.start(now + i * 0.05);
+                        osc.stop(now + i * 0.05 + 0.08);
+                    });
+                } else if (type === 'toadJump') {
+                    // 奇諾比奧可愛跳躍聲
+                    const osc = audioCtx.createOscillator();
+                    const gain = audioCtx.createGain();
+                    osc.type = 'triangle';
+                    osc.frequency.setValueAtTime(260, now);
+                    osc.frequency.exponentialRampToValueAtTime(880, now + 0.12);
+                    gain.gain.setValueAtTime(0.18, now);
+                    gain.gain.linearRampToValueAtTime(0.01, now + 0.15);
+                    osc.connect(gain);
+                    gain.connect(audioCtx.destination);
+                    osc.start(now);
+                    osc.stop(now + 0.15);
+                } else if (type === 'win') {
+                    // 蘑菇王國勝利音階
+                    const notes = [523.25, 659.25, 783.99, 1046.50, 880, 1046.50];
+                    notes.forEach((freq, idx) => {
+                        const osc = audioCtx.createOscillator();
+                        const gain = audioCtx.createGain();
+                        osc.type = 'square';
+                        osc.frequency.setValueAtTime(freq, now + idx * 0.07);
+                        gain.gain.setValueAtTime(0.12, now + idx * 0.07);
+                        gain.gain.exponentialRampToValueAtTime(0.01, now + idx * 0.07 + 0.09);
+                        osc.connect(gain);
+                        gain.connect(audioCtx.destination);
+                        osc.start(now + idx * 0.07);
+                        osc.stop(now + idx * 0.07 + 0.09);
+                    });
+                } else if (type === 'pop') {
+                    // 輕微按鍵音
+                    const osc = audioCtx.createOscillator();
+                    const gain = audioCtx.createGain();
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(500, now);
+                    gain.gain.setValueAtTime(0.08, now);
+                    gain.gain.linearRampToValueAtTime(0.01, now + 0.04);
+                    osc.connect(gain);
+                    gain.connect(audioCtx.destination);
+                    osc.start(now);
+                    osc.stop(now + 0.04);
+                } else if (type === 'error') {
+                    // 毒蘑菇撞擊/警告音效
+                    const osc = audioCtx.createOscillator();
+                    const gain = audioCtx.createGain();
+                    osc.type = 'sawtooth';
+                    osc.frequency.setValueAtTime(150, now);
+                    osc.frequency.setValueAtTime(90, now + 0.1);
+                    gain.gain.setValueAtTime(0.2, now);
+                    gain.gain.linearRampToValueAtTime(0.01, now + 0.2);
+                    osc.connect(gain);
+                    gain.connect(audioCtx.destination);
+                    osc.start(now);
+                    osc.stop(now + 0.2);
+                }
+            } catch (e) {
+                console.log("Audio play error:", e);
+            }
+        }
+
+        let selectedDates = [];
+        const weekdays = ["日", "一", "二", "三", "四", "五", "六"];
+
+        function getFormattedDate(offsetDays = 0) {
+            const target = new Date();
+            target.setDate(target.getDate() + offsetDays);
+            const y = target.getFullYear();
+            const m = String(target.getMonth() + 1).padStart(2, '0');
+            const d = String(target.getDate()).padStart(2, '0');
+            return `${y}-${m}-${d}`;
+        }
+
+        function setTodayDate() {
+            document.getElementById('dateInput').value = getFormattedDate(0);
+        }
+
+        function setQuickDate(offset) {
+            playSound('pop');
+            const targetStr = getFormattedDate(offset);
+            document.getElementById('dateInput').value = targetStr;
+            addDate();
+        }
+
+        window.onload = function() {
+            setTodayDate();
+            updateLivePreview();
+        };
+
+        function formatDateDisplay(dateStr) {
+            if (!dateStr) return '';
+            const parts = dateStr.split('-');
+            if (parts.length !== 3) return dateStr;
+            const d = new Date(parseInt(parts[0], 10), parseInt(parts[1], 10) - 1, parseInt(parts[2], 10));
+            return `${d.getMonth() + 1}/${d.getDate()}（${weekdays[d.getDay()]}）`;
+        }
+
+        function addDate() {
+            const dateVal = document.getElementById('dateInput').value;
+            if (!dateVal) return;
+            if (selectedDates.includes(dateVal)) {
+                playSound('error');
+                showAlert("這個日期已經加過了唷！🍄");
+                return;
+            }
+            selectedDates.push(dateVal);
+            selectedDates.sort(); 
+            renderDates();
+            updateLivePreview();
+        }
+
+        function removeDate(date) {
+            playSound('pop');
+            selectedDates = selectedDates.filter(d => d !== date);
+            renderDates();
+            updateLivePreview();
+        }
+
+        function renderDates() {
+            const list = document.getElementById('dateList');
+            list.innerHTML = '';
+            if (selectedDates.length === 0) {
+                list.innerHTML = '<span id="noDateHint" class="text-gray-400 p-2 font-bold">🍄 尚未加入請假日期喔！</span>';
+                return;
+            }
+            selectedDates.forEach(date => {
+                const span = document.createElement('span');
+                span.className = 'mushroom-tag';
+                span.innerHTML = `${formatDateDisplay(date)} <button onclick="removeDate('${date}')" class="ml-2 text-red-600 font-black hover:text-red-800 focus:outline-none">×</button>`;
+                list.appendChild(span);
+            });
+        }
+
+        function toggleOtherInput(type) {
+            const select = document.getElementById(type);
+            const container = document.getElementById(`other${type.charAt(0).toUpperCase() + type.slice(1)}Container`);
+            container.classList.toggle('hidden', select.value !== '自填');
+        }
+
+        function updateLivePreview() {
+            const name = document.getElementById('name').value.trim();
+            const attendance = document.getElementById('attendance').value;
+            const transport = document.getElementById('transport').value;
+            const reason = document.getElementById('reason').value;
+            const food = document.getElementById('food').value;
+            const note = document.getElementById('customNote').value.trim();
+
+            const attendanceName = document.getElementById('attendanceName').value.trim();
+            const transportName = document.getElementById('transportName').value.trim();
+            const reasonName = document.getElementById('reasonName').value.trim();
+            const foodName = document.getElementById('foodName').value.trim();
+            const noteName = document.getElementById('noteName').value.trim();
+
+            const finalAttendance = attendance === '自填' ? document.getElementById('otherAttendance').value.trim() : attendance;
+            const finalTransport = transport === '自填' ? document.getElementById('otherTransport').value.trim() : transport;
+            const finalReason = reason === '自填' ? document.getElementById('otherReason').value.trim() : reason;
+            const finalFood = food === '自填' ? document.getElementById('otherFood').value.trim() : food;
+
+            const formattedDates = selectedDates.length > 0 
+                ? selectedDates.map(d => formatDateDisplay(d)).join('、') 
+                : "尚未選擇日期";
+            
+            let preview = `【長輩請假通知 🍄 ✨ 🌟】\n\n📅 日期：${formattedDates}`;
+            
+            if (name) {
+                preview += `\n👤 個案：${name}`;
+            }
+            
+            if (finalAttendance) {
+                preview += `\n🏫 出席：${finalAttendance}`;
+                if (attendanceName) preview += `（${attendanceName}）`;
+            }
+            if (finalTransport) {
+                preview += `\n🚐 交通車：${finalTransport}`;
+                if (transportName) preview += `（${transportName}）`;
+            }
+            if (finalReason) {
+                preview += `\n📝 原因：${finalReason}`;
+                if (reasonName) preview += `（${reasonName}）`;
+            }
+            if (finalFood) {
+                preview += `\n🍱 伙食：${finalFood}`;
+                if (foodName) preview += `（${foodName}）`;
+            }
+            if (note) {
+                preview += `\n📌 備註：${note}`;
+                if (noteName) preview += `（${noteName}）`;
+            }
+            
+            document.getElementById('livePreview').innerText = preview;
+        }
+
+        function generateMessage() {
+            const attendance = document.getElementById('attendance').value;
+            const transport = document.getElementById('transport').value;
+            const reason = document.getElementById('reason').value;
+            const food = document.getElementById('food').value;
+
+            if (selectedDates.length === 0) { 
+                playSound('error');
+                showAlert("別忘了先選日期並點「加入」喔！🪙"); 
+                return; 
+            }
+
+            if (attendance === '自填' && !document.getElementById('otherAttendance').value.trim()) { playSound('error'); showAlert("請寫下自訂的出席情形！🏫"); return; }
+            if (transport === '自填' && !document.getElementById('otherTransport').value.trim()) { playSound('error'); showAlert("請寫下自訂的交通需求！🚐"); return; }
+            if (reason === '自填' && !document.getElementById('otherReason').value.trim()) { playSound('error'); showAlert("請寫下自訂的請假原因！📝"); return; }
+            if (food === '自填' && !document.getElementById('otherFood').value.trim()) { playSound('error'); showAlert("請寫下自訂的伙食需求！🍱"); return; }
+
+            playSound('win');
+            const finalMessage = document.getElementById('livePreview').innerText;
+            
+            document.getElementById('messageBox').innerText = finalMessage;
+            document.getElementById('resultModal').classList.remove('hidden');
+        }
+
+        function closeModal() { 
+            document.getElementById('resultModal').classList.add('hidden'); 
+        }
+
+        async function shareToApp() {
+            const text = document.getElementById('messageBox').innerText;
+            if (navigator.share) {
+                try { 
+                    await navigator.share({ text: text }); 
+                } catch (err) {}
+            } else {
+                copyToClipboard(text);
+                showNotice("已為您複製文字囉！🌟");
+            }
+        }
+
+        function copyAndClose() {
+            copyToClipboard(document.getElementById('messageBox').innerText);
+            showNotice("文字複製成功！👑");
+            setTimeout(closeModal, 1200);
+        }
+
+        function copyToClipboard(text) {
+            const textArea = document.createElement("textarea");
+            textArea.value = text;
+            textArea.style.position = "fixed";
+            textArea.style.opacity = "0";
+            document.body.appendChild(textArea);
+            textArea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textArea);
+        }
+
+        function showNotice(msg) {
+            const notice = document.getElementById('copyNotice');
+            notice.innerText = msg;
+            notice.classList.remove('hidden');
+            setTimeout(() => notice.classList.add('hidden'), 1500);
+        }
+
+        function showAlert(msg) {
+            const div = document.createElement('div');
+            div.className = "fixed top-10 left-1/2 -translate-x-1/2 toad-red text-white px-6 py-4 rounded-2xl text-lg md:text-xl z-50 shadow-2xl font-black text-center w-72 retro-border border-black";
+            div.innerText = msg;
+            document.body.appendChild(div);
+            setTimeout(() => div.remove(), 2500);
+        }
+    </script>
+</body>
+</html>

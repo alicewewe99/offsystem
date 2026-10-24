@@ -1,0 +1,76 @@
+@import "tailwindcss";
+
+@layer base {
+  body {
+    font-family: "Microsoft JhengHei", "微軟正黑體", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background-color: #38a169;
+    background-image: 
+      radial-gradient(#48bb78 20%, transparent 20%),
+      radial-gradient(#48bb78 20%, transparent 20%);
+    background-size: 50px 50px;
+    background-position: 0 0, 25px 25px;
+    min-height: 100vh;
+  }
+}
+
+.toad-red {
+  background-color: #E52521;
+}
+
+.toad-blue {
+  background-color: #0055B8;
+}
+
+.toad-cream {
+  background-color: #FFFDF0;
+}
+
+.toad-yellow {
+  background-color: #FBD100;
+}
+
+.retro-border {
+  border: 4px solid #000000;
+  box-shadow: 6px 6px 0px #000000;
+}
+
+.toad-card-border {
+  border: 3.5px solid #000000;
+  box-shadow: 4px 4px 0px #000000;
+}
+
+.input-large {
+  font-size: 1.125rem;
+  padding: 0.75rem 1rem;
+}
+
+.btn-touch {
+  transition: transform 0.08s ease, box-shadow 0.08s ease;
+  cursor: pointer;
+  user-select: none;
+}
+
+.btn-touch:active {
+  transform: translate(2px, 2px);
+  box-shadow: 2px 2px 0px #000000 !important;
+}
+
+.mushroom-tag {
+  background-color: #FFFFFF;
+  border: 3px solid #000000;
+  color: #E52521;
+  padding: 6px 14px;
+  border-radius: 999px;
+  font-weight: 900;
+  display: inline-flex;
+  align-items: center;
+  margin: 4px;
+  font-size: 1.05rem;
+  box-shadow: 3px 3px 0px #0055B8;
+}
+
+.mushroom-dots {
+  background-image: radial-gradient(#FFFFFF 35%, transparent 36%);
+  background-size: 28px 28px;
+}
+
